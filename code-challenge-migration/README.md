@@ -12,7 +12,7 @@ O desafio consiste em migrar este projeto para Java 17 e Spring Boot 3.2.5. Dura
 ## Funcionalidades
 
 - **Consulta de Produtos**: Realiza chamadas para a API do DummyJSON para buscar informações sobre produtos.
-- **Integração com `RestTemplate`**: Utiliza `RestTemplate` para realizar chamadas HTTP.
+- **Integração com `WebClient`**: Utiliza `WebClient` para realizar chamadas HTTP.
 - **Validação de Dados**: Validação de dados de entrada usando Bean Validation (`javax.validation`).
 - **Gestão de Dependências**: Configurado para utilizar @Autowired.
 - **Testes Unitários**: Inclui testes unitários desenvolvidos com JUnit 4 e Mockito.
@@ -27,7 +27,7 @@ dummyjson-client
 │   │   │   └── com.example.dummyjsonclient
 │   │   │       ├── DummyJsonClientApplication.java
 │   │   │       ├── config
-│   │   │       │   └── RestTemplateConfig.java
+│   │   │       │   └── WebClientConfi.java
 │   │   │       ├── controller
 │   │   │       │   └── ProductController.java
 │   │   │       ├── dto
@@ -35,12 +35,14 @@ dummyjson-client
 │   │   │       ├── service
 │   │   │       │   └── ProductService.java
 │   │   └── resources
-│   │       └── application.yaml
+│   │       ├── application.yaml
+│   │       ├── application-dev.yaml
+│   │       └── logback-spring.xml
 │   └── test
 │       ├── java
 │       │   └── com.example.dummyjsonclient
 │       │       ├── config
-│       │       │   └── RestTemplateConfigTest.java
+│       │       │   └── WebClientConfigTest.java
 │       │       └── controller
 │       │       │   └── ProductControllerTest.java
 │       │       ├── dto
@@ -55,8 +57,8 @@ dummyjson-client
 
 ### Pré-requisitos
 
-- **Java 8**
-- **Maven 3.8.x**
+- **Java 17**
+- **Maven 3.2.5**
 
 ### Executar a Aplicação
 
@@ -73,10 +75,16 @@ dummyjson-client
     mvn clean install
     mvn spring-boot:run
     ```
+## Requisitos para rodar o projeto
+
+1. Variável de ambiente spring.profiles.active={dev,prod}
 
 3. Acesse o serviço:
 
     O serviço estará disponível em `http://localhost:8080`.
+    Link do Swagger 'http://localhost:8080/swagger-ui/index.html'.
+
+   Link do health 'http://localhost:8080/actuator/health'
 
 ### Executar Testes
 
@@ -85,24 +93,3 @@ Para executar os testes unitários:
 ```bash
 mvn clean test
 ```
-
-## Requisitos de Entrega
-
-1. Atualizar o `pom.xml` para usar Java 17+ e Spring Boot 3.2.5.
-2. Substituir `RestTemplate` por `WebClient` ou `Openfeign`.
-3. Substituir os testes unitários feitos com `JUnit 4` e `Mockito` por testes de integração utilizando `@SpringBootTest`.
-4. Refatorar qualquer código depreciado ou incompatível.
-5. Garantir que todos os testes ainda passam após a migração.
-6. Deixar a URL da API dummyjson parametrizada por ambiente no projeto.
-7. Adicionar no projeto um novo path `/health` que retorna a saude do microsserviço.
-
-## Validação Sobre o Challenge
-
-- O projeto deve estar funcionando em Java 17 e Spring Boot 3.2.5.
-- Todos os testes unitários devem ser executados e passar sem falhas.
-- O código deve estar devidamente documentado e organizado.
-
-## Extras
-
-- Entregar o projeto em container será um diferencial.
-- Fica a critério do desenvolvedor inserir ou remover dependencias do projeto para garantir o objetivo do challenge.
