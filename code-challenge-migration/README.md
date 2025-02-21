@@ -50,6 +50,7 @@ dummyjson-client
 │       │       └── service
 │       │           └── ProductServiceTest.java
 │       └── resources
+├── Dockerfile
 └── pom.xml
 ```
 
