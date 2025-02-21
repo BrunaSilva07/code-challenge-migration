@@ -3,28 +3,54 @@ package com.example.dummyjson.service;
 import com.example.dummyjson.dto.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
+/**
+ * Serviço para interagir com a API externa para buscar produtos.
+ * Utiliza o WebClient para fazer requisições HTTP e retornar produtos.
+ */
 @Service
 public class ProductService {
 
-    private final String BASE_URL = "https://dummyjson.com/products";
+    private final WebClient webClient;
 
+    /**
+     * Construtor da classe ProductService.
+     *
+     * @param webClient O WebClient configurado para acessar a API externa
+     */
     @Autowired
-    private RestTemplate restTemplate;
-
-    public List<Product> getAllProducts() {
-        Product[] products = restTemplate.getForObject(BASE_URL, Product[].class);
-        return Arrays.asList(products);
+    public ProductService(WebClient webClient) {
+        this.webClient = webClient;
     }
 
+    /**
+     * Obtém todos os produtos da API externa.
+     *
+     * @return Uma lista de produtos
+     */
+    public List<Product> getAllProducts() {
+        return webClient.get()
+                .uri("/products")
+                .retrieve()
+                .bodyToFlux(Product.class)
+                .collectList()
+                .block();
+    }
+
+    /**
+     * Obtém um produto específico pela ID da API externa.
+     *
+     * @param id O ID do produto a ser buscado
+     * @return O produto encontrado
+     */
     public Product getProductById(Long id) {
-        String url = BASE_URL + "/" + id;
-        return restTemplate.getForObject(url, Product.class);
+        return webClient.get()
+                .uri("/products/{id}", id)
+                .retrieve()
+                .bodyToMono(Product.class)
+                .block();
     }
 }

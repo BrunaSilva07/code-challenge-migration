@@ -1,2 +1,15 @@
 server:
   port: 8080
+
+dummyjson:
+  api:
+    url: https://dummyjson.com
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info # Isso irá incluir os endpoints /health e /info
+  endpoint:
+    health:
+      show-details: always
