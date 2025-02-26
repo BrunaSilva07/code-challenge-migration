@@ -19,7 +19,8 @@ class ProductControllerTest {
 
     @Test
     void testGetAllProducts() {
-        webTestClient.get().uri("/products")
+        webTestClient.get()
+                .uri("/api/products")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(Product.class)
@@ -28,7 +29,7 @@ class ProductControllerTest {
 
     @Test
     void testGetProductById() {
-        webTestClient.get().uri("/products/1")
+        webTestClient.get().uri("/api/products/1")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()

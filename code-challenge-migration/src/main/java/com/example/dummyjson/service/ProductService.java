@@ -34,7 +34,6 @@ public class ProductService {
      */
     public Flux<Product> getAllProducts() {
         return webClient.get()
-                .uri("/products")
                 .retrieve()
                 .bodyToFlux(Product.class);
     }
@@ -47,7 +46,7 @@ public class ProductService {
      */
     public Mono<Product> getProductById(Long id) {
         return webClient.get()
-                .uri("/products/{id}", id)
+                .uri("/{id}", id)
                 .retrieve()
                 .bodyToMono(Product.class);
     }

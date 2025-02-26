@@ -13,7 +13,7 @@ import reactor.core.publisher.Mono;
  * Expondo endpoints para buscar todos os produtos e um produto específico por ID.
  */
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/products")
 public class ProductController {
 
     @Autowired
