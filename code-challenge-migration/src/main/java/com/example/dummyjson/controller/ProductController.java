@@ -2,18 +2,18 @@ package com.example.dummyjson.controller;
 
 import com.example.dummyjson.dto.Product;
 import com.example.dummyjson.service.ProductService;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-import java.util.List;
 
 /**
  * Controlador REST para gerenciar produtos.
  * Expondo endpoints para buscar todos os produtos e um produto específico por ID.
  */
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/products")
 public class ProductController {
 
     @Autowired
@@ -25,7 +25,7 @@ public class ProductController {
      * @return Uma lista de todos os produtos disponíveis
      */
     @GetMapping
-    public List<Product> getAllProducts() {
+    public Flux<Product> getAllProducts() {
         return productService.getAllProducts();
     }
 
@@ -36,7 +36,7 @@ public class ProductController {
      * @return O produto encontrado
      */
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable @NotNull Long id) {
+    public Mono<Product> getProductById(@PathVariable Long id) {
         return productService.getProductById(id);
     }
 }

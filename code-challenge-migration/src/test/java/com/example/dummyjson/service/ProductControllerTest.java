@@ -11,14 +11,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
-public class ProductControllerTest {
+class ProductControllerTest {
 
     @Autowired
     public WebTestClient webTestClient;
 
     @Test
-    public void testGetAllProducts() {
-        webTestClient.get().uri("/api/products")
+    void testGetAllProducts() {
+        webTestClient.get().uri("/products")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(Product.class)
@@ -26,8 +26,8 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void testGetProductById() {
-        webTestClient.get().uri("/api/products/1")
+    void testGetProductById() {
+        webTestClient.get().uri("/products/1")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody()

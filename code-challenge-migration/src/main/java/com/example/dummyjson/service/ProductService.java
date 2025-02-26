@@ -4,8 +4,9 @@ import com.example.dummyjson.dto.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-import java.util.List;
 
 /**
  * Serviço para interagir com a API externa para buscar produtos.
@@ -31,13 +32,11 @@ public class ProductService {
      *
      * @return Uma lista de produtos
      */
-    public List<Product> getAllProducts() {
+    public Flux<Product> getAllProducts() {
         return webClient.get()
                 .uri("/products")
                 .retrieve()
-                .bodyToFlux(Product.class)
-                .collectList()
-                .block();
+                .bodyToFlux(Product.class);
     }
 
     /**
@@ -46,11 +45,10 @@ public class ProductService {
      * @param id O ID do produto a ser buscado
      * @return O produto encontrado
      */
-    public Product getProductById(Long id) {
+    public Mono<Product> getProductById(Long id) {
         return webClient.get()
                 .uri("/products/{id}", id)
                 .retrieve()
-                .bodyToMono(Product.class)
-                .block();
+                .bodyToMono(Product.class);
     }
 }
